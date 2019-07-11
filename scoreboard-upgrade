@@ -1,0 +1,19 @@
+\#!/usr/bin/env bash
+
+notify-send "Beginning upgrade" "Backing up current installation"
+
+# Remove old backup and replace with current backup
+rm -rf /home/nrg/scoreboard/crg-backup-backup
+mv -f /home/nrg/scoreboard/crg-backup /home/nrg/scoreboard/crg-backup-backup
+
+# Backup current install
+cp -r /home/nrg/scoreboard/crg-scoreboard /home/nrg/scoreboard/crg-backup
+
+cd /home/nrg/scoreboard/crg-scoreboard
+
+notify-send "Downloading new scoreboard"
+git pull origin dev
+
+notify-send "Compiling"
+ant compile
+notify-send "Upgrade complete" "Last updated `git log -1 --format=%cd`"

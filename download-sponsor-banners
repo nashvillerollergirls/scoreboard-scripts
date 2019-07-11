@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'json'
+
+banners = JSON.parse(`curl -s https://www.nashvillerollerderby.com/sponsors/scoreboard_banners.json`)
+
+`rm /home/nrg/scoreboard/crg-scoreboard/html/images/sponsor_banner/*`
+
+banners.each do |banner|
+  `wget -P /home/nrg/scoreboard/crg-scoreboard/html/images/sponsor_banner/ #{banner}`
+end
+
+banner_word = banners.count == 1 ? 'banner' : 'banners'
+
+`notify-send "Done. Downloaded #{banners.count} #{banner_word}"`
+
+event = JSON.parse(`curl -s https://www.nashvillerollerderby.com/events/upcoming.json`)
+
+# `rm /home/nrg/scoreboard/crg-scoreboard/html/images/teamlogo/*`
+
+logos = [
+  event['teams']['game_1']['home']['logo_url'],
+  event['teams']['game_1']['visiting']['logo_url'],
+  event['teams']['game_2']['home']['logo_url'],
+  event['teams']['game_2']['visiting']['logo_url']
+].compact
+
+logos.each do |logo|
+  `wget -P /home/nrg/scoreboard/crg-scoreboard/html/images/teamlogo/ #{logo}`
+end
+
+logo_word = logos.count == 1 ? 'logo' : 'logos'
+`notify-send "Done. Downloaded #{logos.count} #{logo_word}"`

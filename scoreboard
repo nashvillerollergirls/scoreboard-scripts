@@ -1,0 +1,7 @@
+#! /bin/bash
+
+notify-send "CRG Scoreboard" "Starting the scoreboard server..."
+/home/nrg/scoreboard/crg-scoreboard/scoreboard-Linux.sh &
+
+google-chrome --new --args --new-window http://localhost:8000/views/scoreboard.html &
+google-chrome --new --args --new-window http://localhost:8000/controls/operator.html?operator=slay &
