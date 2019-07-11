@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+
+cd ~/scoreboard-scripts
+git pull origin master
+notify-send "Scripts updated!!!"
